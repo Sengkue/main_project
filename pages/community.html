@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ຊຸມຊົນສະໜັບສະໜູນ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Lao', Arial, sans-serif;
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .community-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            color: #2d3748;
+            font-weight: bold;
+        }
+
+        .chat-section {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .username {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .timestamp {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .message-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .message-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .message-input button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .message-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .support-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .group-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .group-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .group-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .group-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+
+        .group-members {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .success-stories {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .story-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .story-quote {
+            font-style: italic;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .story-author {
+            text-align: right;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .events-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .event-item {
+            background: #f7fafc;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .event-info h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .event-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .event-date {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .online-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #48bb78;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .message-input {
+                flex-direction: column;
+            }
+            
+            .event-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .event-date {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👥 ຊຸມຊົນສະໜັບສະໜູນ</h1>
+            <p class="subtitle">ເຊື່ອມຕໍ່ ແບ່ງປັນ ແລະ ໃຫ້ກຳລັງໃຈເຊິ່ງກັນແລະກັນ</p>
+        </header>
+
+        <!-- Community Statistics -->
+        <div class="community-stats">
+            <div class="stat-card">
+                <div class="stat-number">1,247</div>
+                <div class="stat-label">ສະມາຊິກ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">89</div>
+                <div class="stat-label">
+                    <span class="online-indicator"></span>ອອນລາຍ
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">ກຸ່ມສະໜັບສະໜູນ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">342</div>
+                <div class="stat-label">ເລື່ອງສຳເລັດ</div>
+            </div>
+        </div>
+
+        <div class="community-grid">
+            <!-- Live Chat -->
+            <div class="community-card">
+                <div class="card-header">
+                    <span class="card-icon">💬</span>
+                    <h2 class="card-title">ການສົນທະນາສົດ</h2>
+                </div>
+                
+                <div class="chat-section" id="chat-messages">
+                    <div class="message">
+                        <div class="message-header">
+                            <span class="username">ນາງສາວດາວ</span>
+                            <span class="timestamp">10:30 AM</span>
+                        </div>
+                        <div>ສະບາຍດີທຸກຄົນ! ມື້ນີ້ຮູ້ສຶກດີຂຶ້ນຫຼາຍແລ້ວ ຂອບໃຈການສະໜັບສະໜູນ</div>
+                    </div>
+                    
+                    <div class="message">
+                        <div class="message-header">
+                            <span class="username">ນາຍບຸນມີ</span>
+                            <span class="timestamp">10:35 AM</span>
+                        </div>
+                        <div>ດີໃຈທີ່ໄດ້ຍິນແນວນັ້ນ! ສືບຕໍ່ສູ້ຕໍ່ໄປເດີ້ 💪</div>
+                    </div>
+                    
+                    <div class="message">
+                        <div class="message-header">
+                            <span class="username">ນາງມາລີ</span>
+                            <span class="timestamp">10:40 AM</span>
+                        </div>
+                        <div>ມີໃຜຮູ້ວິທີຮັບມືກັບຄວາມກັງວົນບໍ? ຊ່ວຍແນະນຳໜ້ອຍ</div>
+                    </div>
+                </div>
+                
+                <div class="message-input">
+                    <input type="text" id="chat-input" placeholder="ພິມຂໍ້ຄວາມ...">
+                    <button onclick="sendMessage()">ສົ່ງ</button>
+                </div>
+            </div>
+
+            <!-- Support Groups -->
+            <div class="community-card">
+                <div class="card-header">
+                    <span class="card-icon">🤝</span>
+                    <h2 class="card-title">ກຸ່ມສະໜັບສະໜູນ</h2>
+                </div>
+                
+                <div class="support-groups">
+                    <div class="group-card" onclick="joinGroup('heartbreak')">
+                        <div class="group-icon">💔</div>
+                        <div class="group-name">ກຸ່ມໃຈແຕກ</div>
+                        <div class="group-members">156 ສະມາຊິກ</div>
+                    </div>
+                    
+                    <div class="group-card" onclick="joinGroup('anxiety')">
+                        <div class="group-icon">😰</div>
+                        <div class="group-name">ກຸ່ມຄວາມກັງວົນ</div>
+                        <div class="group-members">203 ສະມາຊິກ</div>
+                    </div>
+                    
+                    <div class="group-card" onclick="joinGroup('motivation')">
+                        <div class="group-icon">🌟</div>
+                        <div class="group-name">ກຸ່ມແຮງບັນດານໃຈ</div>
+                        <div class="group-members">287 ສະມາຊິກ</div>
+                    </div>
+                    
+                    <div class="group-card" onclick="joinGroup('wellness')">
+                        <div class="group-icon">🧘‍♀️</div>
+                        <div class="group-name">ກຸ່ມສຸຂະພາບຈິດ</div>
+                        <div class="group-members">175 ສະມາຊິກ</div>
+                    </div>
+                    
+                    <div class="group-card" onclick="joinGroup('parents')">
+                        <div class="group-icon">👨‍👩‍👧‍👦</div>
+                        <div class="group-name">ກຸ່ມພໍ່ແມ່</div>
+                        <div class="group-members">134 ສະມາຊິກ</div>
+                    </div>
+                    
+                    <div class="group-card" onclick="joinGroup('students')">
+                        <div class="group-icon">🎓</div>
+                        <div class="group-name">ກຸ່ມນັກຮຽນ</div>
+                        <div class="group-members">89 ສະມາຊິກ</div>
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="createGroup()">ສ້າງກຸ່ມໃໝ່</button>
+            </div>
+
+            <!-- Success Stories -->
+            <div class="community-card">
+                <div class="card-header">
+                    <span class="card-icon">🏆</span>
+                    <h2 class="card-title">ເລື່ອງສຳເລັດ</h2>
+                </div>
+                
+                <div class="success-stories">
+                    <div class="story-card">
+                        <div class="story-quote">
+                            "ຫຼັງຈາກຜ່ານໄລຍະຍາກລຳບາກ 6 ເດືອນ, ມື້ນີ້ຂ້ອຍຮູ້ສຶກແຂງແຮງແລະມີຄວາມສຸກກັບຊີວິດໃໝ່"
+                        </div>
+                        <div class="story-author">- ນາງສອນ, 28 ປີ</div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-quote">
+                            "ການເຂົ້າຮ່ວມກຸ່ມນີ້ຊ່ວຍໃຫ້ຂ້ອຍຮຽນຮູ້ວິທີຄຸ້ມຄອງຄວາມກົດດັນໄດ້ດີຂຶ້ນ"
+                        </div>
+                        <div class="story-author">- ນາຍວິໄລ, 35 ປີ</div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-quote">
+                            "ຂອບໃຈທຸກຄົນທີ່ໃຫ້ການສະໜັບສະໜູນ. ມື້ນີ້ຂ້ອຍກຽມແຕ່ງງານແລ້ວ!"
+                        </div>
+                        <div class="story-author">- ນາງນິດ, 26 ປີ</div>
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="shareStory()">ແບ່ງປັນເລື່ອງຂອງທ່ານ</button>
+            </div>
+
+            <!-- Peer Support -->
+            <div class="community-card">
+                <div class="card-header">
+                    <span class="card-icon">🤗</span>
+                    <h2 class="card-title">ການສະໜັບສະໜູນເຊິ່ງກັນແລະກັນ</h2>
+                </div>
+                
+                <p>ຊອກຫາຄົນທີ່ຜ່ານປະສົບການຄ້າຍຄືກັນ ຫຼື ເປັນ mentor ໃຫ້ກັບຄົນອື່ນ</p>
+                
+                <div style="margin: 20px 0;">
+                    <h4 style="margin-bottom: 15px;">ຄົນທີ່ພ້ອມໃຫ້ຄວາມຊ່ວຍເຫຼືອ:</h4>
+                    
+                    <div class="message">
+                        <div class="message-header">
+                            <span class="username">🌟 ນາງຄຳ (Mentor)</span>
+                            <span class="online-indicator"></span>
+                        </div>
+                        <div>ຜ່ານຈາກການອົກຮັກມາແລ້ວ, ພ້ອມໃຫ້ຄຳປຶກສາ</div>
+                        <button class="btn-secondary" onclick="connectPeer('ນາງຄຳ')">ຕິດຕໍ່</button>
+                    </div>
+                    
+                    <div class="message">
+                        <div class="message-header">
+                            <span class="username">💪 ນາຍສຸກ (Mentor)</span>
+                            <span class="online-indicator"></span>
+                        </div>
+                        <div>ຊ່ຽວຊານດ້ານການຄຸ້ມຄອງຄວາມກົດດັນ</div>
+                        <button class="btn-secondary" onclick="connectPeer('ນາຍສຸກ')">ຕິດຕໍ່</button>
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="becomeMentor()">ເປັນ Mentor</button>
+                <button class="btn-secondary" onclick="findPeer()">ຊອກຫາ Peer</button>
+            </div>
+        </div>
+
+        <!-- Upcoming Events -->
+        <div class="events-section">
+            <h2>📅 ກິດຈະກຳທີ່ຈະມາເຖິງ</h2>
+            
+            <div class="event-item">
+                <div class="event-info">
+                    <h4>ກອງປະຊຸມສຸຂະພາບຈິດ</h4>
+                    <p>ການສົນທະນາກ່ຽວກັບການດູແລສຸຂະພາບຈິດໃນຍຸກໃໝ່</p>
+                </div>
+                <div class="event-date">15 ກໍລະກົດ</div>
+            </div>
+            
+            <div class="event-item">
+                <div class="event-info">
+                    <h4>ຄອດສະມາທິອອນລາຍ</h4>
+                    <p>ສຽງແນະນຳການສະມາທິສຳລັບຜູ້ເລີ່ມຕົ້ນ</p>
+                </div>
+                <div class="event-date">18 ກໍລະກົດ</div>
+            </div>
+            
+            <div class="event-item">
+                <div class="event-info">
+                    <h4>ການແບ່ງປັນປະສົບການອົກຮັກ</h4>
+                    <p>ພົບປະແລະແບ່ງປັນປະສົບການກັບຄົນອື່ນ</p>
+                </div>
+                <div class="event-date">22 ກໍລະກົດ</div>
+            </div>
+            
+            <div class="event-item">
+                <div class="event-info">
+                    <h4>ກິດຈະກຳສ້າງແຮງບັນດານໃຈ</h4>
+                    <p>ເວີກຊັອບການຕັ້ງເປົ້າຫມາຍແລະສ້າງແຮງຈູງໃຈ</p>
+                </div>
+                <div class="event-date">25 ກໍລະກົດ</div>
+            </div>
+        </div>
+
+        <!-- Community Guidelines -->
+        <div class="community-card">
+            <div class="card-header">
+                <span class="card-icon">📋</span>
+                <h2 class="card-title">ກົດລະບຽບຊຸມຊົນ</h2>
+            </div>
+            
+            <div style="background: #f7fafc; padding: 20px; border-radius: 10px;">
+                <h4 style="margin-bottom: 15px; color: #2d3748;">ຄຳແນະນຳສຳລັບການມີສ່ວນຮ່ວມ:</h4>
+                <ul style="color: #666; line-height: 2;">
+                    <li>🤝 ເຄົາລົບແລະໃຫ້ກຳລັງໃຈເຊິ່ງກັນແລະກັນ</li>
+                    <li>🔒 ຮັກສາຄວາມລັບຂອງສະມາຊິກ</li>
+                    <li>💬 ໃຊ້ພາສາທີ່ສຸພາບແລະສ້າງສັນ</li>
+                    <li>🚫 ຫ້າມແບ່ງປັນຂໍ້ມູນສ່ວນບຸກຄົນ</li>
+                    <li>❤️ ໃຫ້ຄວາມຊ່ວຍເຫຼືອດ້ວຍໃຈຈິງ</li>
+                    <li>🌟 ແບ່ງປັນປະສົບການໃນທາງບວກ</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let messages = [
+            { username: "ນາງສາວດາວ", time: "10:30 AM", text: "ສະບາຍດີທຸກຄົນ! ມື້ນີ້ຮູ້ສຶກດີຂຶ້ນຫຼາຍແລ້ວ ຂອບໃຈການສະໜັບສະໜູນ" },
+            { username: "ນາຍບຸນມີ", time: "10:35 AM", text: "ດີໃຈທີ່ໄດ້ຍິນແນວນັ້ນ! ສືບຕໍ່ສູ້ຕໍ່ໄປເດີ້ 💪" },
+            { username: "ນາງມາລີ", time: "10:40 AM", text: "ມີໃຜຮູ້ວິທີຮັບມືກັບຄວາມກັງວົນບໍ? ຊ່ວຍແນະນຳໜ້ອຍ" }
+        ];
+
+        // Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messageText = input.value.trim();
+            
+            if (messageText) {
+                const now = new Date();
+                const time = now.toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                const message = {
+                    username: "ທ່ານ",
+                    time: time,
+                    text: messageText
+                };
+                
+                messages.push(message);
+                updateChatDisplay();
+                input.value = '';
+                
+                // Simulate response
+                setTimeout(simulateResponse, 1000 + Math.random() * 2000);
+            }
+        }
+
+        function updateChatDisplay() {
+            const chatContainer = document.getElementById('chat-messages');
+            chatContainer.innerHTML = '';
+            
+            messages.slice(-5).forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <span class="username">${msg.username}</span>
+                        <span class="timestamp">${msg.time}</span>
+                    </div>
+                    <div>${msg.text}</div>
+                `;
+                chatContainer.appendChild(messageDiv);
+            });
+            
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function simulateResponse() {
+            const responses = [
+                { username: "ນາງຄຳ", text: "ຂອບໃຈທີ່ແບ່ງປັນ! ທຸກຄົນຢູ່ນີ້ເພື່ອໃຫ້ການສະໜັບສະໜູນ 🤗" },
+                { username: "ນາຍວິໄລ", text: "ດີໃຈທີ່ເຫັນທ່ານມີສ່ວນຮ່ວມໃນຊຸມຊົນ!" },
+                { username: "ນາງນິດ", text: "ຫວັງວ່າວັນນີ້ຈະເປັນວັນທີ່ດີສຳລັບທຸກຄົນ ✨" },
+                { username: "ນາຍສຸກ", text: "ຖ້າຕ້ອງການຄຳແນະນຳ ບອກໄດ້ເລີຍ!" }
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            
+            messages.push({
+                username: randomResponse.username,
+                time: time,
+                text: randomResponse.text
+            });
+            
+            updateChatDisplay();
+        }
+
+        // Group functionality
+        function joinGroup(groupType) {
+            const groupNames = {
+                'heartbreak': 'ກຸ່ມໃຈແຕກ',
+                'anxiety': 'ກຸ່ມຄວາມກັງວົນ',
+                'motivation': 'ກຸ່ມແຮງບັນດານໃຈ',
+                'wellness': 'ກຸ່ມສຸຂະພາບຈິດ',
+                'parents': 'ກຸ່ມພໍ່ແມ່',
+                'students': 'ກຸ່ມນັກຮຽນ'
+            };
+            
+            alert(`🎉 ຍິນດີຕ້ອນຮັບເຂົ້າສູ່ ${groupNames[groupType]}!\n\nທ່ານສາມາດເລີ່ມແບ່ງປັນແລະຮັບການສະໜັບສະໜູນຈາກສະມາຊິກຄົນອື່ນໆໄດ້ແລ້ວ.`);
+        }
+
+        function createGroup() {
+            const groupName = prompt('ຊື່ກຸ່ມໃໝ່:');
+            const groupDescription = prompt('ຄຳອະທິບາຍກຸ່ມ:');
+            
+            if (groupName && groupDescription) {
+                alert(`✅ ສ້າງກຸ່ມ "${groupName}" ສຳເລັດແລ້ວ!\n\nຄຳອະທິບາຍ: ${groupDescription}\n\nກຸ່ມຂອງທ່ານຈະຖືກສະແດງໃນລາຍການກຸ່ມສະໜັບສະໜູນ.`);
+            }
+        }
+
+        // Peer support functionality
+        function connectPeer(mentorName) {
+            alert(`📞 ກຳລັງເຊື່ອມຕໍ່ກັບ ${mentorName}...\n\nທ່ານຈະໄດ້ຮັບການແຈ້ງເຕືອນເມື່ອ ${mentorName} ພ້ອມສົນທະນາ.`);
+        }
+
+        function becomeMentor() {
+            const experience = prompt('ກະລຸນາອະທິບາຍປະສົບການທີ່ທ່ານສາມາດແບ່ງປັນໄດ້:');
+            
+            if (experience) {
+                alert(`🌟 ຂອບໃຈທີ່ເຕັມໃຈເປັນ Mentor!\n\nປະສົບການຂອງທ່ານ: ${experience}\n\nລໍຖ້າການອະນຸມັດຈາກທີມບໍລິຫານຊຸມຊົນ.`);
+            }
+        }
+
+        function findPeer() {
+            const interest = prompt('ທ່ານກຳລັງຊອກຫາການສະໜັບສະໜູນດ້ານໃດ?');
+            
+            if (interest) {
+                alert(`🔍 ກຳລັງຊອກຫາ peer ທີ່ເໝາະສົມສຳລັບ: ${interest}\n\nຈະແຈ້ງໃຫ້ທ່ານຮູ້ເມື່ອພົບຜູ້ທີ່ເໝາະສົມ.`);
+            }
+        }
+
+        // Success story functionality
+        function shareStory() {
+            const story = prompt('ແບ່ງປັນເລື່ອງສຳເລັດຂອງທ່ານ:');
+            const name = prompt('ຊື່ (ຫຼື ນາມແຝງ):');
+            
+            if (story && name) {
+                alert(`📝 ຂອບໃຈທີ່ແບ່ງປັນເລື່ອງແຮງບັນດານໃຈ!\n\nເລື່ອງຂອງທ່ານຈະຊ່ວຍໃຫ້ກຳລັງໃຈຄົນອື່ນໆ ແລະ ຈະຖືກການອະນຸມັດກ່ອນເຜີຍແຜ່.`);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add enter key listener for chat input
+            document.getElementById('chat-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Update chat display
+            updateChatDisplay();
+            
+            // Simulate periodic new messages
+            setInterval(() => {
+                if (Math.random() < 0.3) { // 30% chance every 10 seconds
+                    simulateResponse();
+                }
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
