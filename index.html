@@ -4,315 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ແດຊບອດຫຼັກ - Main Project</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans Lao', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 280px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 20px 0;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .sidebar.collapsed {
-            width: 80px;
-        }
-
-        .logo {
-            text-align: center;
-            padding: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 20px;
-        }
-
-        .logo h1 {
-            color: white;
-            font-size: 1.5em;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar.collapsed .logo h1 {
-            font-size: 1em;
-        }
-
-        .menu-toggle {
-            position: absolute;
-            top: 20px;
-            right: -15px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-
-        .menu-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        .nav-menu {
-            list-style: none;
-            padding: 0 10px;
-        }
-
-        .nav-item {
-            margin-bottom: 5px;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
-        }
-
-        .nav-link.active {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .nav-icon {
-            font-size: 1.5em;
-            margin-right: 15px;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .nav-text {
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .sidebar.collapsed .nav-text {
-            opacity: 0;
-            width: 0;
-        }
-
-        .sidebar.collapsed .nav-icon {
-            margin-right: 0;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 20px 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .header h1 {
-            color: white;
-            font-size: 2.2em;
-            margin-bottom: 10px;
-        }
-
-        .breadcrumb {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1em;
-        }
-
-        .content-area {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            min-height: 600px;
-        }
-
-        /* Dashboard Cards */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .dashboard-card {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            padding: 25px;
-            border-radius: 15px;
-            color: white;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .dashboard-card.heartbreak {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .dashboard-card.wellness {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        }
-
-        .dashboard-card.motivation {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-        }
-
-        .dashboard-card.community {
-            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
-        }
-
-        .card-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .card-title {
-            font-size: 1.3em;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .card-description {
-            font-size: 0.9em;
-            opacity: 0.9;
-            line-height: 1.4;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        /* Hidden content areas */
-        .page-content {
-            display: none;
-        }
-
-        .page-content.active {
-            display: block;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: fixed;
-                top: 0;
-                left: -100%;
-                z-index: 1000;
-                transition: left 0.3s ease;
-            }
-
-            .sidebar.mobile-open {
-                left: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding-top: 80px;
-            }
-
-            .mobile-menu-btn {
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                z-index: 1001;
-                background: rgba(255, 255, 255, 0.9);
-                border: none;
-                border-radius: 10px;
-                padding: 10px;
-                font-size: 1.5em;
-                cursor: pointer;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 0.6s ease-out;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
@@ -432,185 +124,52 @@
 
                 <!-- Heartbreak Support Page -->
                 <div id="heartbreak-page" class="page-content">
-                    <iframe id="heartbreak-iframe" src="" style="width: 100%; height: 800px; border: none; border-radius: 10px;"></iframe>
+                    <iframe id="heartbreak-iframe" src="pages/heartbreak.html" style="width: 100%; height: 800px; border: none; border-radius: 10px;"></iframe>
                 </div>
 
-                <!-- Other Pages (Placeholder) -->
+                <!-- Wellness Page -->
                 <div id="wellness-page" class="page-content">
-                    <h2 style="color: #333;">🧘‍♀️ ສຸຂະພາບຈິດ</h2>
-                    <p style="color: #666; margin-top: 20px;">ໜ້ານີ້ກຳລັງພັດທະນາ... ສຳລັບເຕັກນິກການຜ່ອນຄາຍ ແລະ ການດູແລສຸຂະພາບຈິດ</p>
+                    <iframe src="pages/wellness.html" style="width: 100%; height: 800px; border: none; border-radius: 10px;"></iframe>
                 </div>
 
+                <!-- Motivation Page -->
                 <div id="motivation-page" class="page-content">
-                    <h2 style="color: #333;">💪 ແຮງບັນດານໃຈ</h2>
-                    <p style="color: #666; margin-top: 20px;">ໜ້ານີ້ກຳລັງພັດທະນາ... ສຳລັບຄຳເວົ້າໃຫ້ກຳລັງໃຈ ແລະ ແຮງບັນດານໃຈ</p>
+                    <iframe src="pages/motivation.html" style="width: 100%; height: 800px; border: none; border-radius: 10px;"></iframe>
                 </div>
 
+                <!-- Community Page -->
                 <div id="community-page" class="page-content">
-                    <h2 style="color: #333;">👥 ຊຸມຊົນ</h2>
-                    <p style="color: #666; margin-top: 20px;">ໜ້ານີ້ກຳລັງພັດທະນາ... ສຳລັບການເຊື່ອມຕໍ່ຊຸມຊົນ</p>
+                    <iframe src="pages/community.html" style="width: 100%; height: 800px; border: none; border-radius: 10px;"></iframe>
                 </div>
 
+                <!-- Resources Page -->
                 <div id="resources-page" class="page-content">
                     <h2 style="color: #333;">📚 ແຫຼ່ງຂໍ້ມູນ</h2>
-                    <p style="color: #666; margin-top: 20px;">ໜ້ານີ້ກຳລັງພັດທະນາ... ສຳລັບແຫຼ່ງຂໍ້ມູນການຮຽນຮູ້</p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h3 style="color: #666;">📖 ບົດຄວາມແນະນຳ</h3>
+                        <ul style="color: #666; margin-top: 15px;">
+                            <li>ວິທີຮັບມືກັບຄວາມເຄັ່ງຕຶງ</li>
+                            <li>ການສ້າງຄວາມສຳພັນທີ່ແຂງແຮງ</li>
+                            <li>ການພັດທະນາຕົນເອງ</li>
+                            <li>ການຕັ້ງເປົ້າຫມາຍໃນຊີວິດ</li>
+                        </ul>
+                    </div>
                 </div>
 
+                <!-- Settings Page -->
                 <div id="settings-page" class="page-content">
                     <h2 style="color: #333;">⚙️ ການຕັ້ງຄ່າ</h2>
-                    <p style="color: #666; margin-top: 20px;">ໜ້ານີ້ກຳລັງພັດທະນາ... ສຳລັບການຕັ້ງຄ່າລະບົບ</p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h3 style="color: #666;">🎨 ການຕັ້ງຄ່າຮູບແບບ</h3>
+                        <p style="color: #666; margin-top: 10px;">• ປ່ຽນສີພື້ນຫລັງ</p>
+                        <p style="color: #666;">• ປັບຂະໜາດຕົວອັກສອນ</p>
+                        <p style="color: #666;">• ເລືອກພາສາ</p>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <script>
-        // Page navigation
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page-content');
-            pages.forEach(page => page.classList.remove('active'));
-
-            // Show selected page
-            const selectedPage = document.getElementById(pageId + '-page');
-            if (selectedPage) {
-                selectedPage.classList.add('active');
-                selectedPage.classList.add('fade-in');
-                
-                // Remove animation class after animation completes
-                setTimeout(() => {
-                    selectedPage.classList.remove('fade-in');
-                }, 600);
-            }
-
-            // Update active menu item
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.classList.remove('active'));
-            
-            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-
-            // Update header
-            updateHeader(pageId);
-
-            // Special handling for heartbreak page
-            if (pageId === 'heartbreak') {
-                loadHeartbreakContent();
-            }
-
-            // Close mobile menu
-            closeMobileMenu();
-        }
-
-        function updateHeader(pageId) {
-            const titles = {
-                'dashboard': 'ຍິນດີຕ້ອນຮັບສູ່ແດຊບອດຫຼັກ',
-                'heartbreak': '💔 ກຳລັງໃຈສຳລັບໃຈທີ່ແຕກສະຫຼາຍ',
-                'wellness': '🧘‍♀️ ສຸຂະພາບຈິດ',
-                'motivation': '💪 ແຮງບັນດານໃຈ',
-                'community': '👥 ຊຸມຊົນ',
-                'resources': '📚 ແຫຼ່ງຂໍ້ມູນ',
-                'settings': '⚙️ ການຕັ້ງຄ່າ'
-            };
-
-            const breadcrumbs = {
-                'dashboard': 'ໜ້າຫຼັກ / ແດຊບອດ',
-                'heartbreak': 'ໜ້າຫຼັກ / ກຳລັງໃຈໃຈແຕກ',
-                'wellness': 'ໜ້າຫຼັກ / ສຸຂະພາບຈິດ',
-                'motivation': 'ໜ້າຫຼັກ / ແຮງບັນດານໃຈ',
-                'community': 'ໜ້າຫຼັກ / ຊຸມຊົນ',
-                'resources': 'ໜ້າຫຼັກ / ແຫຼ່ງຂໍ້ມູນ',
-                'settings': 'ໜ້າຫຼັກ / ການຕັ້ງຄ່າ'
-            };
-
-            document.getElementById('page-title').textContent = titles[pageId] || titles['dashboard'];
-            document.getElementById('breadcrumb').textContent = breadcrumbs[pageId] || breadcrumbs['dashboard'];
-        }
-
-        function loadHeartbreakContent() {
-            const iframe = document.getElementById('heartbreak-iframe');
-            // In a real implementation, you would load the heartbreak support page
-            // For now, we'll create a data URL with the content
-            const heartbreakHTML = `data:text/html;charset=utf-8,${encodeURIComponent(`
-                <!DOCTYPE html>
-                <html lang="lo">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>💔 ກຳລັງໃຈສຳລັບໃຈທີ່ແຕກສະຫຼາຍ 💝</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 0; padding: 20px; color: #333; }
-                        .container { max-width: 800px; margin: 0 auto; }
-                        .card { background: rgba(255,255,255,0.95); padding: 30px; margin: 20px 0; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
-                        h1 { color: white; text-align: center; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-                        .quote { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: white; padding: 25px; border-radius: 15px; text-align: center; margin: 20px 0; font-style: italic; font-size: 1.1em; }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <h1>💔 ກຳລັງໃຈສຳລັບໃຈທີ່ແຕກສະຫຼາຍ 💝</h1>
-                        <div class="card">
-                            <h2>🌅 ຄວາມຫວັງໃໝ່ທຸກມື້</h2>
-                            <div class="quote">
-                                "ໃຈທີ່ແຕກສະຫຼາຍບໍ່ແມ່ນຈຸດຈົບ ແຕ່ເປັນຈຸດເລີ່ມຕົ້ນຂອງການຮຽນຮູ້ທີ່ຈະຮັກຕົນເອງຫຼາຍຂຶ້ນ"
-                            </div>
-                            <p>ຄວາມເຈັບປວດທີ່ທ່ານຮູ້ສຶກໃນປັດຈຸບັນນີ້ແມ່ນສິ່ງປົກກະຕິ. ມັນສະແດງໃຫ້ເຫັນວ່າທ່ານເຄີຍຮັກຢ່າງແທ້ຈິງ ແລະ ນັ້ນແມ່ນສິ່ງທີ່ສວຍງາມ.</p>
-                        </div>
-                        <div class="card">
-                            <h2>💪 ແນວຄິດເພື່ອການຟື້ນຕົວ</h2>
-                            <p><strong>📝 ຂຽນບັນທຶກຄວາມຮູ້ສຶກ:</strong> ຂຽນອອກມາເພື່ອປ່ອຍອາລົມທີ່ຂັງໃນໃຈ</p>
-                            <p><strong>🚶‍♂️ ອອກກຳລັງກາຍ:</strong> ການເດີນ, ການແລ່ນ, ຫຼື ການໂຍຄະຈະຊ່ວຍປ່ອຍຮໍໂມນແຫ່ງຄວາມສຸກ</p>
-                            <p><strong>👥 ໂອ້ລົມກັບຄົນທີ່ເຊື່ອໃຈ:</strong> ການແບ່ງປັນກັບໝູ່ເພື່ອນ ຫຼື ຄອບຄົວຈະຊ່ວຍໃຫ້ໃຈເບົາລົງ</p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `)}`;
-            
-            iframe.src = heartbreakHTML;
-        }
-
-        // Sidebar toggle
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
-            
-            const toggleBtn = document.querySelector('.menu-toggle');
-            if (sidebar.classList.contains('collapsed')) {
-                toggleBtn.innerHTML = '▶';
-            } else {
-                toggleBtn.innerHTML = '◀';
-            }
-        }
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('mobile-open');
-        }
-
-        function closeMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('mobile-open');
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            showPage('dashboard');
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            const sidebar = document.getElementById('sidebar');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            
-            if (window.innerWidth <= 768 && 
-                !sidebar.contains(e.target) && 
-                !menuBtn.contains(e.target)) {
-                closeMobileMenu();
-            }
-        });
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
