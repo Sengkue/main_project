@@ -113,31 +113,33 @@
         }
         
         .download-section {
-            margin-top: 20px;
+            margin: 20px 0;
             text-align: center;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 5px;
-            border: 1px solid #ddd;
         }
         
         .download-btn {
-            padding: 10px 15px;
-            margin: 5px;
-            background-color: #28a745;
-            color: white;
+            padding: 8px 15px;
+            margin: 0 5px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
         
-        .download-btn:hover {
+        .download-btn.excel {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .download-btn.excel:hover {
             background-color: #218838;
         }
         
         .download-btn.pdf {
             background-color: #dc3545;
+            color: white;
         }
         
         .download-btn.pdf:hover {
@@ -164,6 +166,11 @@
             </div>
             
             <button onclick="generateTable()">Generate Table</button>
+        </div>
+        
+        <div class="download-section">
+            <button class="download-btn excel" onclick="downloadExcel()">📊 Excel</button>
+            <button class="download-btn pdf" onclick="downloadPDF()">📄 PDF</button>
         </div>
         
         <div class="number-buttons">
@@ -196,12 +203,6 @@
             <div class="formula-line">2 × 10 = 20</div>
             <div class="formula-line">2 × 11 = 22</div>
             <div class="formula-line">2 × 12 = 24</div>
-        </div>
-        
-        <div class="download-section">
-            <h4>Download Options:</h4>
-            <button class="download-btn" onclick="downloadExcel()">📊 Download as Excel</button>
-            <button class="download-btn pdf" onclick="downloadPDF()">📄 Download as PDF</button>
         </div>
     </div>
 
