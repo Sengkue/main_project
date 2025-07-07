@@ -1,1 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neumorphic Login & Register</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background: #e0e5ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #e0e5ec;
+      padding: 2rem;
+      border-radius: 25px;
+      box-shadow: 10px 10px 30px #bec3c9, -10px -10px 30px #ffffff;
+      width: 350px;
+      transition: all 0.3s ease;
+    }
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .tabs button {
+      flex: 1;
+      padding: 0.7rem;
+      margin: 0 5px;
+      border: none;
+      border-radius: 15px;
+      background: #e0e5ec;
+      box-shadow: inset 5px 5px 10px #bec3c9,
+                  inset -5px -5px 10px #ffffff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #666;
+    }
+    .tabs button:hover {
+      transform: translateY(-2px);
+    }
+    .tabs .active {
+      background: linear-gradient(145deg, #d1d9e6, #ffffff);
+      box-shadow: inset 2px 2px 5px #bec3c9,
+                  inset -2px -2px 5px #ffffff;
+      color: #333;
+    }
+    .form-section {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .form-section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .input-group {
+      margin-bottom: 1rem;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: 10px;
+      border: none;
+      background: #e0e5ec;
+      box-shadow: inset 3px 3px 6px #bec3c9,
+                  inset -3px -3px 6px #ffffff;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      color: #333;
+    }
+    .input-group input:focus {
+      outline: none;
+      box-shadow: inset 2px 2px 4px #bec3c9,
+                  inset -2px -2px 4px #ffffff;
+    }
+    .input-group input::placeholder {
+      color: #999;
+    }
+    .action-btn {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      margin-top: 0.5rem;
+      border-radius: 15px;
+      background: #e0e5ec;
+      box-shadow: 5px 5px 10px #bec3c9,
+                  -5px -5px 10px #ffffff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #333;
+      font-size: 16px;
+    }
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 7px 7px 15px #bec3c9,
+                  -7px -7px 15px #ffffff;
+    }
+    .action-btn:active {
+      transform: translateY(0);
+      box-shadow: inset 3px 3px 6px #bec3c9,
+                  inset -3px -3px 6px #ffffff;
+    }
+    .action-btn i {
+      margin-right: 8px;
+    }
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .social-icon {
+      width: 45px;
+      height: 45px;
+      background: #e0e5ec;
+      border-radius: 50%;
+      box-shadow: 5px 5px 10px #bec3c9,
+                  -5px -5px 10px #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      color: #666;
+    }
+    .social-icon:hover {
+      transform: translateY(-3px);
+      box-shadow: 7px 7px 15px #bec3c9,
+                  -7px -7px 15px #ffffff;
+    }
+    .or {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: 14px;
+      color: #777;
+    }
+    .forgot-password {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 12px;
+      color: #666;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .forgot-password:hover {
+      color: #333;
+    }
+    .success-message {
+      background: linear-gradient(145deg, #d4edda, #c3e6cb);
+      color: #155724;
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 14px;
+      box-shadow: inset 2px 2px 5px #b8d4c2,
+                  inset -2px -2px 5px #ffffff;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button class="active" id="loginBtn" onclick="switchTab('login')">Login</button>
+      <button id="registerBtn" onclick="switchTab('register')">Register</button>
+    </div>
+    
+    <div class="success-message" id="successMessage"></div>
+    
+    <!-- Login Form -->
+    <div class="form-section active" id="loginForm">
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" id="loginEmail" />
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password" id="loginPassword" />
+      </div>
+      <button class="action-btn" onclick="loginUser()">
+        <i>🔐</i> Login
+      </button>
+      <div class="forgot-password" onclick="forgotPassword()">
+        Forgot Password?
+      </div>
+    </div>
+    
+    <!-- Register Form -->
+    <div class="form-section" id="registerForm">
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe" id="registerName" />
+      </div>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" id="registerEmail" />
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Create a password" id="registerPassword" />
+      </div>
+      <div class="input-group">
+        <label>Confirm Password</label>
+        <input type="password" placeholder="Confirm your password" id="confirmPassword" />
+      </div>
+      <button class="action-btn" onclick="registerUser()">
+        <i>👤</i> Register
+      </button>
+    </div>
+    
+    <div class="or">Or continue with</div>
+    <div class="social">
+      <div class="social-icon" onclick="socialLogin('google')" title="Google">G</div>
+      <div class="social-icon" onclick="socialLogin('facebook')" title="Facebook">f</div>
+      <div class="social-icon" onclick="socialLogin('twitter')" title="Twitter">🐦</div>
+    </div>
+  </div>
 
+  <script>
+    function switchTab(tab) {
+      const loginBtn = document.getElementById('loginBtn');
+      const registerBtn = document.getElementById('registerBtn');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const successMessage = document.getElementById('successMessage');
+      
+      // Hide success message when switching tabs
+      successMessage.style.display = 'none';
+      
+      if (tab === 'login') {
+        loginBtn.classList.add('active');
+        registerBtn.classList.remove('active');
+        loginForm.classList.add('active');
+        registerForm.classList.remove('active');
+      } else {
+        loginBtn.classList.remove('active');
+        registerBtn.classList.add('active');
+        loginForm.classList.remove('active');
+        registerForm.classList.add('active');
+      }
+    }
+    
+    function loginUser() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!email || !password) {
+        alert("Please fill out all fields.");
+        return;
+      }
+      
+      // Simulate login validation
+      if (email === "user@example.com" && password === "password") {
+        showSuccessMessage("Login successful! Welcome back!");
+        // Clear form
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+      } else {
+        alert("Invalid credentials. Try email: user@example.com, password: password");
+      }
+    }
+    
+    function registerUser() {
+      const name = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (!name || !email || !password || !confirmPassword) {
+        alert("Please fill out all fields.");
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+      
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+      }
+      
+      showSuccessMessage(`Welcome ${name}! Registration successful.`);
+      
+      // Clear form
+      document.getElementById('registerName').value = '';
+      document.getElementById('registerEmail').value = '';
+      document.getElementById('registerPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+    }
+    
+    function forgotPassword() {
+      const email = prompt("Enter your email address:");
+      if (email) {
+        showSuccessMessage("Password reset link sent to your email!");
+      }
+    }
+    
+    function socialLogin(provider) {
+      showSuccessMessage(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login initiated!`);
+    }
+    
+    function showSuccessMessage(message) {
+      const successDiv = document.getElementById('successMessage');
+      successDiv.textContent = message;
+      successDiv.style.display = 'block';
+      
+      // Auto-hide after 3 seconds
+      setTimeout(() => {
+        successDiv.style.display = 'none';
+      }, 3000);
+    }
+    
+    // Add Enter key support for forms
+    document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        
+        if (loginForm.classList.contains('active')) {
+          loginUser();
+        } else if (registerForm.classList.contains('active')) {
+          registerUser();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
