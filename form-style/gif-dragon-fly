@@ -1,1 +1,1070 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ultra Modern Authentication</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    /* Animated Background Particles */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 0.5; }
+    }
+    
+    /* Floating Geometric Shapes */
+    .bg-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+      animation: floatShape 8s ease-in-out infinite;
+    }
+    
+    @keyframes floatShape {
+      0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
+      33% { transform: translateY(-30px) scale(1.1) rotate(120deg); }
+      66% { transform: translateY(20px) scale(0.9) rotate(240deg); }
+    }
+    
+    /* Animated Dragonflies */
+    .dragonflies {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5; /* Higher z-index to appear above other elements */
+    }
+    
+    .dragonfly {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      animation: flyPath 15s linear infinite;
+      z-index: 5;
+    }
+    
+    .dragonfly img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+      transition: filter 0.3s ease;
+    }
+    
+    @keyframes flyPath {
+      0% {
+        transform: translateX(-80px) translateY(100vh) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      15% {
+        transform: translateX(15vw) translateY(85vh) rotate(20deg) scale(1);
+      }
+      30% {
+        transform: translateX(40vw) translateY(60vh) rotate(-15deg) scale(1.1);
+      }
+      45% {
+        transform: translateX(65vw) translateY(40vh) rotate(25deg) scale(0.9);
+      }
+      60% {
+        transform: translateX(80vw) translateY(70vh) rotate(-10deg) scale(1.05);
+      }
+      75% {
+        transform: translateX(90vw) translateY(30vh) rotate(15deg) scale(0.95);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(120vw) translateY(-80px) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+    
+    /* Different flight patterns and timing for variety */
+    .dragonfly:nth-child(1) {
+      animation-delay: 0s;
+      animation-duration: 18s;
+    }
+    
+    .dragonfly:nth-child(2) {
+      animation-delay: 6s;
+      animation-duration: 22s;
+    }
+    
+    .dragonfly:nth-child(3) {
+      animation-delay: 12s;
+      animation-duration: 20s;
+    }
+    
+    .dragonfly:nth-child(4) {
+      animation-delay: 3s;
+      animation-duration: 16s;
+    }
+    
+    .dragonfly:nth-child(5) {
+      animation-delay: 9s;
+      animation-duration: 24s;
+    }
+    
+    .dragonfly:nth-child(6) {
+      animation-delay: 15s;
+      animation-duration: 19s;
+    }
+    
+    /* Alternative flight path for some dragonflies */
+    .dragonfly:nth-child(even) {
+      animation-name: flyPathReverse;
+    }
+    
+    @keyframes flyPathReverse {
+      0% {
+        transform: translateX(120vw) translateY(-80px) rotate(180deg) scale(0.8);
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      15% {
+        transform: translateX(85vw) translateY(30vh) rotate(200deg) scale(1);
+      }
+      30% {
+        transform: translateX(60vw) translateY(50vh) rotate(165deg) scale(1.1);
+      }
+      45% {
+        transform: translateX(35vw) translateY(75vh) rotate(205deg) scale(0.9);
+      }
+      60% {
+        transform: translateX(20vw) translateY(40vh) rotate(170deg) scale(1.05);
+      }
+      75% {
+        transform: translateX(10vw) translateY(80vh) rotate(195deg) scale(0.95);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(-80px) translateY(100vh) rotate(180deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+    
+    /* Hover effect for container - dragonflies react */
+    .container:hover ~ .dragonflies .dragonfly img {
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)) brightness(1.2);
+    }
+    
+    /* Different sizes for variety */
+    .dragonfly:nth-child(2) {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .dragonfly:nth-child(4) {
+      width: 70px;
+      height: 70px;
+    }
+    
+    .dragonfly:nth-child(6) {
+      width: 45px;
+      height: 45px;
+    }
+    
+    /* Main Container */
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 3rem 2.5rem;
+      border-radius: 30px;
+      width: 420px;
+      position: relative;
+      z-index: 3; /* Lower z-index so dragonflies can fly over it */
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      animation: slideInUp 0.8s ease-out;
+      transition: all 0.3s ease;
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border-radius: 30px;
+      z-index: -1;
+    }
+    
+    @keyframes slideInUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Header Section */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      font-weight: bold;
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .title {
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      font-weight: 400;
+    }
+    
+    /* Tab System */
+    .tabs {
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 4px;
+      margin-bottom: 2rem;
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+    
+    .tab-indicator {
+      position: absolute;
+      height: calc(100% - 8px);
+      width: calc(50% - 4px);
+      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+      border-radius: 16px;
+      top: 4px;
+      left: 4px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tabs button {
+      flex: 1;
+      padding: 0.8rem;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 16px;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    
+    .tabs button.active {
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Form Sections */
+    .form-section {
+      display: none;
+    }
+    
+    .form-section.active {
+      display: block;
+      animation: fadeInSlide 0.6s ease-out;
+    }
+    
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Input Groups */
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .input-wrapper {
+      position: relative;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: white;
+      font-size: 16px;
+      font-weight: 400;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    
+    .input-group input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .input-group input:focus {
+      border-color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .input-group label {
+      position: absolute;
+      left: 1.2rem;
+      top: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 16px;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      font-weight: 400;
+    }
+    
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 0.8rem;
+      font-size: 12px;
+      color: white;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    
+    /* Password Strength Indicator */
+    .password-strength {
+      margin-top: 0.5rem;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .password-strength.show {
+      opacity: 1;
+    }
+    
+    .strength-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    
+    .strength-weak { background: #ff4757; width: 33%; }
+    .strength-medium { background: #ffa502; width: 66%; }
+    .strength-strong { background: #2ed573; width: 100%; }
+    
+    /* Action Buttons */
+    .action-btn {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+    
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .action-btn:hover::before {
+      left: 100%;
+    }
+    
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+    
+    .action-btn:active {
+      transform: translateY(-1px);
+    }
+    
+    /* Social Login */
+    .divider {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+    }
+    
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: 1;
+    }
+    
+    .divider span {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .social-login {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    
+    .social-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 20px;
+    }
+    
+    .social-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Additional Features */
+    .forgot-password {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    
+    .forgot-password:hover {
+      color: white;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    
+    /* Success/Error Messages */
+    .message {
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 500;
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .message.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .message.success {
+      background: rgba(46, 213, 115, 0.2);
+      border: 1px solid rgba(46, 213, 115, 0.3);
+      color: #2ed573;
+    }
+    
+    .message.error {
+      background: rgba(255, 71, 87, 0.2);
+      border: 1px solid rgba(255, 71, 87, 0.3);
+      color: #ff4757;
+    }
+    
+    /* Loading Animation */
+    .loading {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 480px) {
+      .container {
+        width: 95%;
+        padding: 2rem 1.5rem;
+      }
+      
+      .title {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="particles" id="particles"></div>
+  <div class="bg-shapes" id="bgShapes"></div>
+  <div class="dragonflies" id="dragonflies"></div>
+  
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">A</div>
+      <h1 class="title">Welcome Back</h1>
+      <p class="subtitle">Enter your credentials to access your account</p>
+    </div>
+    
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <div class="tab-indicator" id="tabIndicator"></div>
+      <button class="active" id="loginTab" onclick="switchTab('login')">Sign In</button>
+      <button id="registerTab" onclick="switchTab('register')">Sign Up</button>
+    </div>
+    
+    <!-- Message Display -->
+    <div class="message" id="message"></div>
+    
+    <!-- Login Form -->
+    <div class="form-section active" id="loginForm">
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="email" id="loginEmail" placeholder=" " autocomplete="email">
+          <label>Email Address</label>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="password" id="loginPassword" placeholder=" " autocomplete="current-password">
+          <label>Password</label>
+        </div>
+      </div>
+      
+      <button class="action-btn" onclick="handleLogin()">
+        <span id="loginBtnText">Sign In</span>
+        <div class="loading" id="loginLoading"></div>
+      </button>
+      
+      <a href="#" class="forgot-password" onclick="handleForgotPassword()">
+        Forgot your password?
+      </a>
+    </div>
+    
+    <!-- Register Form -->
+    <div class="form-section" id="registerForm">
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="text" id="registerName" placeholder=" " autocomplete="name">
+          <label>Full Name</label>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="email" id="registerEmail" placeholder=" " autocomplete="email">
+          <label>Email Address</label>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="password" id="registerPassword" placeholder=" " autocomplete="new-password" oninput="checkPasswordStrength()">
+          <label>Password</label>
+        </div>
+        <div class="password-strength" id="passwordStrength">
+          <div class="strength-bar" id="strengthBar"></div>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <div class="input-wrapper">
+          <input type="password" id="confirmPassword" placeholder=" " autocomplete="new-password">
+          <label>Confirm Password</label>
+        </div>
+      </div>
+      
+      <button class="action-btn" onclick="handleRegister()">
+        <span id="registerBtnText">Create Account</span>
+        <div class="loading" id="registerLoading"></div>
+      </button>
+    </div>
+    
+    <!-- Social Login -->
+    <div class="divider">
+      <span>Or continue with</span>
+    </div>
+    
+    <div class="social-login">
+      <div class="social-btn" onclick="handleSocialLogin('google')" title="Google">
+        <span style="color: #db4437;">G</span>
+      </div>
+      <div class="social-btn" onclick="handleSocialLogin('facebook')" title="Facebook">
+        <span style="color: #4267B2;">f</span>
+      </div>
+      <div class="social-btn" onclick="handleSocialLogin('github')" title="GitHub">
+        <span style="color: #333;">⚡</span>
+      </div>
+      <div class="social-btn" onclick="handleSocialLogin('apple')" title="Apple">
+        <span style="color: #000;">🍎</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize animations and effects
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+      createFloatingShapes();
+      createDragonflies();
+      initializeInputEffects();
+    });
+    
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Create floating geometric shapes
+    function createFloatingShapes() {
+      const shapesContainer = document.getElementById('bgShapes');
+      const shapeCount = 8;
+      
+      for (let i = 0; i < shapeCount; i++) {
+        const shape = document.createElement('div');
+        shape.className = 'shape';
+        const size = Math.random() * 100 + 50;
+        shape.style.width = size + 'px';
+        shape.style.height = size + 'px';
+        shape.style.left = Math.random() * 100 + '%';
+        shape.style.top = Math.random() * 100 + '%';
+        shape.style.animationDelay = Math.random() * 8 + 's';
+        shape.style.animationDuration = (Math.random() * 6 + 8) + 's';
+        shapesContainer.appendChild(shape);
+      }
+    }
+    
+    // Create animated dragonflies
+    function createDragonflies() {
+      const dragonfliesContainer = document.getElementById('dragonflies');
+      const dragonflyCount = 6; // Increased count for more magic
+      
+      for (let i = 0; i < dragonflyCount; i++) {
+        const dragonfly = document.createElement('div');
+        dragonfly.className = 'dragonfly';
+        
+        // Create dragonfly image
+        const img = document.createElement('img');
+        img.src = 'https://media.tenor.com/4lMDpr7A86gAAAAi/%E8%9C%BB%E8%9C%93.gif';
+        img.alt = 'Animated Dragonfly';
+        img.style.pointerEvents = 'none';
+        img.crossOrigin = 'anonymous'; // Help with CORS if needed
+        
+        // Add loading and error handling
+        img.onload = function() {
+          console.log('Dragonfly image loaded successfully');
+        };
+        
+        img.onerror = function() {
+          console.log('Dragonfly image failed to load, using fallback');
+          // Fallback to a simple emoji if image fails to load
+          dragonfly.innerHTML = '🦋';
+          dragonfly.style.fontSize = '40px';
+          dragonfly.style.display = 'flex';
+          dragonfly.style.alignItems = 'center';
+          dragonfly.style.justifyContent = 'center';
+          dragonfly.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.8)';
+        };
+        
+        // Assemble dragonfly
+        dragonfly.appendChild(img);
+        
+        // Randomize starting position and add slight variations
+        dragonfly.style.top = (Math.random() * 80 + 10) + '%';
+        dragonfly.style.animationDelay = (Math.random() * 20) + 's';
+        dragonfly.style.animationDuration = (Math.random() * 8 + 16) + 's';
+        
+        dragonfliesContainer.appendChild(dragonfly);
+      }
+      
+      // Force immediate creation of first dragonfly for testing
+      setTimeout(() => {
+        const firstDragonfly = dragonfliesContainer.firstChild;
+        if (firstDragonfly) {
+          firstDragonfly.style.animationDelay = '0s';
+          firstDragonfly.style.top = '50%';
+        }
+      }, 1000);
+    }
+    
+    // Initialize input label effects
+    function initializeInputEffects() {
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        // Check if input has value on load
+        if (input.value) {
+          input.nextElementSibling.style.transform = 'translateY(-8px)';
+          input.nextElementSibling.style.fontSize = '12px';
+        }
+      });
+    }
+    
+    // Tab switching functionality
+    function switchTab(tab) {
+      const loginTab = document.getElementById('loginTab');
+      const registerTab = document.getElementById('registerTab');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabIndicator = document.getElementById('tabIndicator');
+      const title = document.querySelector('.title');
+      const subtitle = document.querySelector('.subtitle');
+      
+      // Clear any messages
+      hideMessage();
+      
+      if (tab === 'login') {
+        loginTab.classList.add('active');
+        registerTab.classList.remove('active');
+        loginForm.classList.add('active');
+        registerForm.classList.remove('active');
+        tabIndicator.style.transform = 'translateX(0)';
+        title.textContent = 'Welcome Back';
+        subtitle.textContent = 'Enter your credentials to access your account';
+      } else {
+        loginTab.classList.remove('active');
+        registerTab.classList.add('active');
+        loginForm.classList.remove('active');
+        registerForm.classList.add('active');
+        tabIndicator.style.transform = 'translateX(100%)';
+        title.textContent = 'Create Account';
+        subtitle.textContent = 'Join us and start your journey today';
+      }
+    }
+    
+    // Password strength checker
+    function checkPasswordStrength() {
+      const password = document.getElementById('registerPassword').value;
+      const strengthIndicator = document.getElementById('passwordStrength');
+      const strengthBar = document.getElementById('strengthBar');
+      
+      if (password.length === 0) {
+        strengthIndicator.classList.remove('show');
+        return;
+      }
+      
+      strengthIndicator.classList.add('show');
+      
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+      
+      strengthBar.className = 'strength-bar';
+      if (strength <= 1) {
+        strengthBar.classList.add('strength-weak');
+      } else if (strength <= 3) {
+        strengthBar.classList.add('strength-medium');
+      } else {
+        strengthBar.classList.add('strength-strong');
+      }
+    }
+    
+    // Handle login
+    async function handleLogin() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!email || !password) {
+        showMessage('Please fill in all fields', 'error');
+        return;
+      }
+      
+      if (!isValidEmail(email)) {
+        showMessage('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      showLoading('login', true);
+      
+      // Simulate API call
+      setTimeout(() => {
+        showLoading('login', false);
+        
+        if (email === 'demo@example.com' && password === 'password') {
+          showMessage('Welcome back! Login successful', 'success');
+          setTimeout(() => {
+            // Redirect or perform login action
+            console.log('Login successful!');
+          }, 2000);
+        } else {
+          showMessage('Invalid credentials. Try demo@example.com / password', 'error');
+        }
+      }, 2000);
+    }
+    
+    // Handle registration
+    async function handleRegister() {
+      const name = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (!name || !email || !password || !confirmPassword) {
+        showMessage('Please fill in all fields', 'error');
+        return;
+      }
+      
+      if (!isValidEmail(email)) {
+        showMessage('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      if (password.length < 8) {
+        showMessage('Password must be at least 8 characters long', 'error');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showMessage('Passwords do not match', 'error');
+        return;
+      }
+      
+      showLoading('register', true);
+      
+      // Simulate API call
+      setTimeout(() => {
+        showLoading('register', false);
+        showMessage(`Welcome ${name}! Account created successfully`, 'success');
+        
+        // Clear form
+        document.getElementById('registerName').value = '';
+        document.getElementById('registerEmail').value = '';
+        document.getElementById('registerPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        document.getElementById('passwordStrength').classList.remove('show');
+        
+        // Auto switch to login after 3 seconds
+        setTimeout(() => {
+          switchTab('login');
+        }, 3000);
+      }, 2000);
+    }
+    
+    // Handle social login
+    function handleSocialLogin(provider) {
+      showMessage(`Connecting to ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`, 'success');
+      
+      setTimeout(() => {
+        showMessage(`${provider.charAt(0).toUpperCase() + provider.slice(1)} authentication successful!`, 'success');
+      }, 2000);
+    }
+    
+    // Handle forgot password
+    function handleForgotPassword() {
+      const email = prompt('Enter your email address:');
+      if (email && isValidEmail(email)) {
+        showMessage('Password reset link sent to your email!', 'success');
+      } else if (email) {
+        showMessage('Please enter a valid email address', 'error');
+      }
+    }
+    
+    // Utility functions
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+    
+    function showMessage(text, type) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.className = `message ${type} show`;
+      
+      setTimeout(() => {
+        hideMessage();
+      }, 5000);
+    }
+    
+    function hideMessage() {
+      const message = document.getElementById('message');
+      message.classList.remove('show');
+    }
+    
+    function showLoading(type, show) {
+      const btnText = document.getElementById(`${type}BtnText`);
+      const loading = document.getElementById(`${type}Loading`);
+      
+      if (show) {
+        btnText.style.display = 'none';
+        loading.style.display = 'block';
+      } else {
+        btnText.style.display = 'block';
+        loading.style.display = 'none';
+      }
+    }
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        
+        if (loginForm.classList.contains('active')) {
+          handleLogin();
+        } else if (registerForm.classList.contains('active')) {
+          handleRegister();
+        }
+      }
+    });
+    
+    // Add subtle mouse movement parallax effect
+    document.addEventListener('mousemove', function(e) {
+      const container = document.querySelector('.container');
+      const x = (e.clientX / window.innerWidth) * 10;
+      const y = (e.clientY / window.innerHeight) * 10;
+      
+      container.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${y}deg)`;
+    });
+    
+    document.addEventListener('mouseleave', function() {
+      const container = document.querySelector('.container');
+      container.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+    });
+  </script>
+</body>
+</html>
